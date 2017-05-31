@@ -5,13 +5,17 @@ import ev from '../../services/event';
 import { connect }  from 'react-redux';
 import { View, Text,StyleSheet,TouchableOpacity } from 'react-native';
 import MyDate from '../MyDate';
-import select_event from '../../actions/current_event/select_event';
+import edit_current_data from '../../actions/current_data/edit_current_data';
 
 class Event extends Component{
   selectEvent(){
-    const { event,dispatch,history } = this.props;
-    dispatch(select_event(event))
+    const { event,dispatch,history,key,selectProject } = this.props;
+    dispatch(edit_current_data({
+      event_id: event.id,
+      event_name: event.name
+    }))
     history.push({pathname:'/home'});
+    selectProject?selectProject.call(this):null;
   }
   render(){
     const {event} = this.props;

@@ -18,36 +18,42 @@ import { connect } from 'react-redux';
 import load_events from './actions/events/load_events';
 import load_projects from './actions/projects/load_projects';
 import load_current_event from './actions/current_event/load_current_event';
+import edit_current_data from './actions/current_data/edit_current_data';
 import update from './services/update';
 
 class App extends Component {
   componentWillMount(){
-    const { projects,events,current_event,dispatch } = this.props;
+    const { projects,events,current_data,dispatch } = this.props;
     storage.load({
       key: 'ALLDATA',
       id: 'last'
     }).then(ret => {
       // 如果找到数据，则在then方法中返回
+      console.log('storage:',ret)
       if(!!projects&&ret.projects.length>0){
         dispatch(load_projects(ret.projects));
       }
+      console.log('1111111')
       if(!!events && ret.events.length>0){
         dispatch(load_events(ret.events));
       }
-      if(!!current_event && ret.current_event){
-        dispatch(load_current_event(ret.current_event));
+      console.log('2222222')
+      if(!!current_data && ret.current_data){
+        dispatch(edit_current_data(ret.current_data));
       }
-      update.start();
+      console.log('3333333')
+    }).catch(err=>{
+      console.log(err);
     });
   }
   componentWillUnmount(){
-    console.log(this.props)
-    const { current_event,projects,events } = this.props;
+    console.log('save in storage:',this.props)
+    const { current_data,projects,events } = this.props;
     storage.save({
       key: 'ALLDATA',  // 注意:请不要在key中使用_下划线符号!
       id: 'last',
       data: {
-        current_event,projects,events
+        current_data,projects,events
       }
     });
   }

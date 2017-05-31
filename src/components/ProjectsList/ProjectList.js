@@ -11,12 +11,13 @@ import ProjectView from './ProjectView';
 import ProjectOption from './ProjectOption';
 import CreateEvent from './CreateEvent';
 import MyModal from '../MyModal';
+import edit_current_data from '../../actions/current_data/edit_current_data';
 
 class ProjectList extends Component{
   state={
     show_detail:false,
     create_ev: false,
-    ev_name:'', 
+    ev_name:'',
     modalVisible: false
   }
   createEvent(ev_name){
@@ -29,29 +30,36 @@ class ProjectList extends Component{
   deleteProject(){
     this.setState({modalVisible:true});
   }
+  selectProject(){
+    const { project,dispatch } = this.props;
+    dispatch(edit_current_data({
+      project_id: project.id,
+      project_name: project.name
+    }))
+  }
   render(){
     const { project,events } = this.props;
     return (
       <View style={styles.main}>
-        <ProjectView 
-          project={project} 
-          onPress={()=>this.setState({show_detail:!this.state.show_detail})} 
+        <ProjectView
+          project={project}
+          onPress={()=>this.setState({show_detail:!this.state.show_detail})}
           show_detail={this.state.show_detail}/>
         {
           (this.state.show_detail&&this.state.create_ev)?
-          <CreateEvent 
-            createEvent={this.createEvent.bind(this)} 
+          <CreateEvent
+            createEvent={this.createEvent.bind(this)}
             cancel={()=>this.setState({create_ev:false})}/>:null
         }
         {
           (this.state.show_detail&&!this.state.create_ev)?
-          <ProjectOption 
-            goCreateEvent={()=>this.setState({create_ev:true})} 
+          <ProjectOption
+            goCreateEvent={()=>this.setState({create_ev:true})}
             deleteProject={this.deleteProject.bind(this)} />:null
         }
         {
           this.state.show_detail&&events.map((event,key)=>{
-            return (event.project_id === project.id)?<Event event={event} key ={key} history={this.props.history}/>:null;
+            return (event.project_id === project.id)?<Event event={event} key ={key} history={this.props.history} selectProject={this.selectProject.bind(this)}/>:null;
           })
         }
       </View>

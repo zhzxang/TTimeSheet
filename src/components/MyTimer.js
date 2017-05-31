@@ -3,35 +3,45 @@ import config from '../config';
 import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
 import ev from '../services/event';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import edit_current_event from '../actions/current_event/edit_current_event';
 
 class MyTimer extends Component{
-
-  continue(){
-    console.log('continue');
+  state={
+    h: "00",
+    m: "00",
+    s: "00",
+    run_state: false,
   }
-  pause(){
+  onContinue(){
+    const { dispatch,event} = this.props;
+    let run_state = !this.state.run_state;
+    this.setState({run_state: run_state})
+    dispatch(edit_current_event({run_state: run_state}))
+  }
+  onPause(){
     console.log('pause');
   }
+  componentDidMount(){
+    const { event } = this.props;
+    if(event){
+      this.setState({run_state: event.run_state})
+    }
+  }
   off(){
-
+    console.log('off')
   }
   render(){
     const { event } = this.props;
-    let test={
-      h: '01',
-      m: '02',
-      s: '03'
-    }
     return (
       <View style={styles.main}>
         <View style={styles.row}>
-          <Time text={test.h} label={'H'} border={1}/>
-          <Time text={test.m} label={'M'} border={1}/>
-          <Time text={test.s} label={'S'} />
+          <Time text={this.state.h} label={'H'} border={1}/>
+          <Time text={this.state.m} label={'M'} border={1}/>
+          <Time text={this.state.s} label={'S'} />
         </View>
         <View style={[styles.row,{borderTopWidth: 1,borderTopColor: config.draw[0]}]}>
         {
-          event.run_state?<Continue onContinue={this.continue.bind(this)} />:<Pause onPause={this.pause.bind(this)} />
+          this.state.run_state?<Pause onPause={this.onPause.bind(this)} />:<Continue onContinue={this.onContinue.bind(this)} />
         }
         <Over onOver={this.off.bind(this)} />
         </View>
@@ -50,7 +60,7 @@ const Time=({text,label,border})=>(
 
 const Continue = ({onContinue})=>(
   <View style={styles.icon_position}>
-    <TouchableOpacity onPress={onPause}>
+    <TouchableOpacity onPress={onContinue}>
       <Icon name="play" size={30} color={'#ec3051'}/>
     </TouchableOpacity>
   </View>
@@ -66,7 +76,7 @@ const Pause = ({onPause})=>(
 const Over = ({onOver})=>(
   <View style={styles.icon_position}>
     <TouchableOpacity onPress={onOver}>
-      <Icon name="power-off" size={30}/>
+      <Icon name="power-off" size={30} color={'#ec3051'}/>
     </TouchableOpacity>
   </View>
 )
