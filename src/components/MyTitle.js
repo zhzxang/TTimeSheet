@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
   },
   label:{
     fontSize: 18,
-    marginTop:15
+    marginTop:15,
+    marginRight: 5
   }
 });
 

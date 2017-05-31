@@ -6,6 +6,7 @@ import MyTitle from '../components/MyTitle';
 import { connect } from 'react-redux';
 import update from '../services/update';
 import MyMenu from '../components/MyMenu';
+import MyTimer from '../components/MyTimer';
 
 class HomePage extends Component{
   constructor(props){
@@ -37,7 +38,8 @@ class HomePage extends Component{
         <NavBar title={'TimeSheet'} />
         <View style={styles.content}>
           <MyTitle title={this.state.cp.name} label={'项目名'}/>
-          <MyMenu label={'项目名'} />
+          <MyMenu label={'事件'} text={event.name} />
+          <MyTimer event={event}/>
         </View>
       </View>
     )
