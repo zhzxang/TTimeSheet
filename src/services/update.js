@@ -1,18 +1,26 @@
-const update = Update();
+const update =(function(){
+  const _updateArr = [];
+  const _updateObj = {};
 
-function Update(){
-  const _updateStore = [];
-
-  function _register(fn){
-    _updateStore.push(fn);
+  function _register(fn,name){
+    if(name){
+      _updateObj.name = fn;
+    }
+    else{
+      _updateArr.push(fn);
+    }
   }
-  function _start(){
-    _updateStore.forEach((u)=>u.call(this))
+  function _start(name){
+    if(name){
+      _updateObj[name].call(this);
+    }else{
+      _updateStore.forEach((u)=>u.call(this))
+    }
   }
   return {
     register: _register,
     start: _start,
   }
-}
+})();
 
 export default update;

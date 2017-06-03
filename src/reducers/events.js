@@ -12,6 +12,16 @@ const events =(state = [], action)=> {
       })
     case 'LOAD_EVENTS' :
       return [...action.data];
+    case 'ADD_HISTORY' :
+      return state.map((ev,key)=>{
+        if(ev.id === action.id ){
+          ev.history.push(action.data);
+          return Object.assign({},ev);
+        }
+        else{
+          return ev;
+        }
+      })
     default:
       return state
   }

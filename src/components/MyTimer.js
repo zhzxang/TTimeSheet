@@ -3,56 +3,48 @@ import config from '../config';
 import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
 import ev from '../services/event';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import edit_current_event from '../actions/current_event/edit_current_event';
+import { connect } from 'react-redux';
 
 class MyTimer extends Component{
-  state={
-    h: "00",
-    m: "00",
-    s: "00",
-    run_state: false,
-  }
   onContinue(){
-    const { dispatch,event} = this.props;
-    let run_state = !this.state.run_state;
-    this.setState({run_state: run_state})
-    dispatch(edit_current_event({run_state: run_state}))
+    const { dispatch,event } = this.props;
+    ev.start(event,dispatch);
   }
   onPause(){
-    console.log('pause');
+    const { dispatch,event } = this.props;
+    ev.stop(event,dispatch);
   }
-  componentDidMount(){
+  componentWillMount(){
     const { event } = this.props;
     if(event){
-      this.setState({run_state: event.run_state})
+      this.setState({run_state: event.run_state});
     }
   }
   off(){
     console.log('off')
   }
   render(){
-    const { event } = this.props;
+    const { event={count_time:{}} } = this.props;
     return (
-      <View style={styles.main}>
+      <View style={[styles.main,{borderColor: config.draw[0]}]}>
         <View style={styles.row}>
-          <Time text={this.state.h} label={'H'} border={1}/>
-          <Time text={this.state.m} label={'M'} border={1}/>
-          <Time text={this.state.s} label={'S'} />
+          <Time text={ev.format(event.count_time.h)} label={'H'} border={1}/>
+          <Time text={ev.format(event.count_time.m)} label={'M'} border={1}/>
+          <Time text={ev.format(event.count_time.s)} label={'S'} />
         </View>
         <View style={[styles.row,{borderTopWidth: 1,borderTopColor: config.draw[0]}]}>
         {
-          this.state.run_state?<Pause onPause={this.onPause.bind(this)} />:<Continue onContinue={this.onContinue.bind(this)} />
+          event&&event.run_state?<Pause onPause={this.onPause.bind(this)} />:<Continue onContinue={this.onContinue.bind(this)} />
         }
         <Over onOver={this.off.bind(this)} />
         </View>
-
       </View>
     )
   }
 }
 
 const Time=({text,label,border})=>(
-  <View style={[styles.timer,border?styles.border:{}]}>
+  <View style={[styles.timer,border?{borderRightWidth: 1,borderRightColor: config.draw[0]}:{}]}>
     <Text style={styles.time}>{text}</Text>
     <Text style={styles.time_label}>{label}</Text>
   </View>
@@ -88,7 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   time_label:{
-    marginTop: 18,
+    marginTop: 30,
     fontSize: 14
   },
   icon_position:{
@@ -101,16 +93,12 @@ const styles = StyleSheet.create({
     paddingRight: 15
 
   },
-  border:{
-    borderRightWidth: 1,
-    borderRightColor: config.draw[0]
-  },
   main:{
     marginTop: 15,
     flexDirection: 'column',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: config.draw[0],
+
     borderRadius: 10
   },
   row:{
@@ -130,4 +118,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MyTimer;
+const getState =(state,ownProps)=>{
+  return {
+    event: state.events.find(ev=>ev.id===ownProps.eventId),
+  }
+}
+
+export default connect(getState)(MyTimer);

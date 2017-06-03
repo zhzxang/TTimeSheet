@@ -19,6 +19,7 @@ class Event extends Component{
   }
   render(){
     const {event} = this.props;
+    const count_time = event?ev.caculateTime(event):{};
     return(
       <View style={styles.main}>
         <TouchableOpacity style={styles.row} onPress={this.selectEvent.bind(this)}>
@@ -26,7 +27,7 @@ class Event extends Component{
           {
             event.run_state?
             <Text>正在进行</Text>:
-            <MyDate h={1} m={3} s={2} />
+            <MyDate h={count_time.h} m={count_time.m} s={count_time.s} />
           }
         </TouchableOpacity>
       </View>

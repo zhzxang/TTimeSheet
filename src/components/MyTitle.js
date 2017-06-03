@@ -16,7 +16,7 @@ class MyTitle extends Component{
             {title}
           </Text>
         </View>
-        <View style={styles.divider} />
+        <View style={[styles.divider,{borderBottomColor: config.draw[0]}]} />
       </View>
     )
   }
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
   divider:{
     marginTop: 5,
     borderBottomWidth: 1,
-    borderBottomColor: config.draw[1],
     width: '70%'
   },
   label:{

@@ -28,16 +28,16 @@ class CreateProject extends Component{
   render(){
     return (
       <View style={styles.main}>
-        <NavBar 
-        title={'创建项目'} 
-        column={3} 
+        <NavBar
+        title={'创建项目'}
+        column={3}
         rightIcon = {'check'}
         rightEvent={this.save.bind(this)}
-        leftIcon={'arrow-left'} 
+        leftIcon={'arrow-left'}
         leftEvent={this.back.bind(this)} />
         <View style={styles.context}>
           <Text style={styles.font}>项目名称：</Text>
-          <TextInput 
+          <TextInput
             onChangeText={(name) => this.setState({name})}
             value={this.state.name}
             underlineColorAndroid={config.draw[1]}
@@ -47,10 +47,10 @@ class CreateProject extends Component{
             <MyDatePicker style={[{flex:1}]} date={this.startDate.bind(this)}/>
           </View>
           <Text style={styles.font}>项目说明：</Text>
-          <TextInput 
+          <TextInput
             onChangeText={(context) => this.setState({context})}
             value={this.state.context}
-            style={styles.bigInput}
+            style={[styles.bigInput,{borderColor: config.draw[1]}]}
             multiline={false}
             numberOfLines={5}
             underlineColorAndroid={'transparent'}
@@ -78,11 +78,9 @@ const styles = StyleSheet.create({
   },
   bigInput:{
     borderWidth: 1,
-    borderColor: config.draw[1],
     fontSize:20,
-    alignItems: 'flex-start' 
+    alignItems: 'flex-start'
   }
-
 })
 
 const getState=(state)=>{

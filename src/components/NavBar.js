@@ -9,18 +9,18 @@ class NavBar extends Component{
     return (
       <View>
           {column > 1?(
-            <View style={[styles.nav,{justifyContent: 'space-between'}]}>
+            <View style={[styles.nav,{justifyContent: 'space-between',backgroundColor: config.draw[1]}]}>
               <TouchableOpacity onPress={leftEvent}>
-                <Icon name={leftIcon?leftIcon:'plus'} style={(hide&&hide=='left')?styles.opacity:styles.icon}/>
+                <Icon name={leftIcon?leftIcon:'plus'} style={(hide&&hide=='left')?styles.opacity:[styles.icon,{color: config.draw[3]}]}/>
               </TouchableOpacity>
-              <Text style={styles.title}>{title}</Text>
+              <Text style={[styles.title,{color: config.draw[3]}]}>{title}</Text>
               <TouchableOpacity onPress={rightEvent}>
-                <Icon name={rightIcon?rightIcon:'plus'} style={(hide&&hide=='right')?styles.opacity:styles.icon}/>
+                <Icon name={rightIcon?rightIcon:'plus'} style={(hide&&hide=='right')?styles.opacity:[styles.icon,{color: config.draw[3]}]}/>
               </TouchableOpacity>
             </View>
           ):(
-            <View style={[styles.nav,{justifyContent: 'space-around'}]}>
-              <Text style={styles.title}>{title}</Text>
+            <View style={[styles.nav,{justifyContent: 'space-around',backgroundColor: config.draw[1]}]}>
+              <Text style={[styles.title,{color: config.draw[3]}]}>{title}</Text>
             </View>
           )}
         <View style={{marginTop:50}}></View>
@@ -35,23 +35,20 @@ const styles = StyleSheet.create({
     height: 50,
     width: '100%',
     top: 0,
-    backgroundColor: config.draw[1],
     flexDirection: 'row',
     alignItems: 'center',
-    
+
     paddingLeft: 10,
     paddingRight: 10,
   },
   title:{
     fontSize:22,
-    color: config.draw[3]
   },
   icon:{
     fontSize:25,
-    color: config.draw[3]
   },
   opacity:{
-    opacity: 0 
+    opacity: 0
   }
 });
 

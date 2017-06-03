@@ -4,8 +4,9 @@
  * @flow
  */
 
-__ANDROID__ = true;
-__IOS__ = false;
-__APP__ = true;
+global.__APP__= true;
+global.__ANDROID__= true;
+global.__IOS__= false;
+global.__DEV__ = false;
 
 require('./src');
