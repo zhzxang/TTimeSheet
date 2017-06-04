@@ -4,6 +4,11 @@ const projects =(state = [], action)=> {
       return [...state,action.data];
     case 'LOAD_PROJECTS' :
       return [...action.data];
+    case 'DELETE_PROJECT' :
+      const newState = state.filter(p=>p.id!==action.id);
+      return newState;
+    case 'CLEAR_ALL':
+      return [];
     default:
       return state
   }

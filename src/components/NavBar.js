@@ -32,7 +32,7 @@ class NavBar extends Component{
 const styles = StyleSheet.create({
   nav:{
     position: "absolute",
-    height: 50,
+    height: 60,
     width: '100%',
     top: 0,
     flexDirection: 'row',
@@ -42,10 +42,10 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   title:{
-    fontSize:22,
+    fontSize:28,
   },
   icon:{
-    fontSize:25,
+    fontSize:35,
   },
   opacity:{
     opacity: 0

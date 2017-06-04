@@ -12,13 +12,13 @@ import ProjectOption from './ProjectOption';
 import CreateEvent from './CreateEvent';
 import MyModal from '../MyModal';
 import edit_current_data from '../../actions/current_data/edit_current_data';
+import delete_project from '../../actions/projects/delete_project';
 
 class ProjectList extends Component{
   state={
     show_detail:false,
     create_ev: false,
-    ev_name:'',
-    modalVisible: false
+    ev_name:''
   }
   createEvent(ev_name){
     this.props.dispatch(create_event(ev_name,this.props.project.id));
@@ -28,7 +28,7 @@ class ProjectList extends Component{
     this.setState({ev_name:text});
   }
   deleteProject(){
-    this.setState({modalVisible:true});
+    this.props.dispatch(delete_project(this.props.project.id));
   }
   selectProject(){
     const { project,dispatch } = this.props;
@@ -55,7 +55,7 @@ class ProjectList extends Component{
           (this.state.show_detail&&!this.state.create_ev)?
           <ProjectOption
             goCreateEvent={()=>this.setState({create_ev:true})}
-            deleteProject={this.deleteProject.bind(this)} />:null
+            deleteProject={()=>this.props.delete(project.id)} />:null
         }
         {
           this.state.show_detail&&events.map((event,key)=>{
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   main:{
     flexDirection: 'column',
     padding: 5,
+    marginTop: 10
   }
 })
 

@@ -22,6 +22,10 @@ const events =(state = [], action)=> {
           return ev;
         }
       })
+    case 'DELETE_PROJECT':
+      return state.filter(ev=>ev.project_id!==action.id);
+    case 'CLEAR_ALL':
+      return [];
     default:
       return state
   }

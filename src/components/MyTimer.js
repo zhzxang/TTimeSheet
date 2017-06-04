@@ -4,6 +4,7 @@ import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
 import ev from '../services/event';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
+import edit_event from '../actions/events/edit_event';
 
 class MyTimer extends Component{
   onContinue(){
@@ -20,8 +21,12 @@ class MyTimer extends Component{
       this.setState({run_state: event.run_state});
     }
   }
-  off(){
-    console.log('off')
+  complete(){
+    const { event,dispatch } = this.props;
+    if(event.run_state&&!event.complete){
+      ev.stop(event,dispatch);
+    }
+    dispatch(edit_event(event.id,{complete: !event.complete}))
   }
   render(){
     const { event={count_time:{}} } = this.props;
@@ -32,11 +37,12 @@ class MyTimer extends Component{
           <Time text={ev.format(event.count_time.m)} label={'M'} border={1}/>
           <Time text={ev.format(event.count_time.s)} label={'S'} />
         </View>
+
         <View style={[styles.row,{borderTopWidth: 1,borderTopColor: config.draw[0]}]}>
         {
-          event&&event.run_state?<Pause onPause={this.onPause.bind(this)} />:<Continue onContinue={this.onContinue.bind(this)} />
+          !event.complete&&(event.run_state?<Pause onPause={this.onPause.bind(this)} />:<Continue onContinue={this.onContinue.bind(this)} />)
         }
-        <Over onOver={this.off.bind(this)} />
+        <Over complete={event.complete} onOver={this.complete.bind(this)} />
         </View>
       </View>
     )
@@ -65,10 +71,10 @@ const Pause = ({onPause})=>(
     </TouchableOpacity>
   </View>
 );
-const Over = ({onOver})=>(
+const Over = ({onOver,complete})=>(
   <View style={styles.icon_position}>
     <TouchableOpacity onPress={onOver}>
-      <Icon name="power-off" size={30} color={'#ec3051'}/>
+      <Icon name="check-circle-o" size={35} color={complete?'#33c641':'#ccc'}/>
     </TouchableOpacity>
   </View>
 )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { 
+import {
   TouchableOpacity,
   Text,
   StyleSheet,
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
   },
   date:{
     fontSize: 18,
-    marginRight: 20,
   },
 });
 

@@ -63,10 +63,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   content:{
-    padding: 5
+    padding: 5,
+    marginTop:5
   },
   list:{
-    height: 40,
+    height: 50,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     flexDirection: 'row',

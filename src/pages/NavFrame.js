@@ -36,14 +36,15 @@ class NavFrame extends Component{
 const styles = StyleSheet.create({
   navBar_bottom:{
     position: "absolute",
-    height: 60,
+    height: 50,
     width: '100%',
     bottom: 0,
     flexDirection: 'row',
     borderTopWidth: 1,
     borderTopColor: '#ccc',
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    backgroundColor: '#fff',
   }
 });
 
@@ -52,7 +53,7 @@ const ChoseLink = ({ unselect,selected, to , exact })=>{
   return (
     <Route path={to} exact = {exact?true:false} children={({match})=>{
       return (
-        <Link 
+        <Link
           component={TouchableOpacity}
           activeOpacity={0.5}
           to ={to}>

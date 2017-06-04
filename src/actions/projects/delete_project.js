@@ -1,7 +1,7 @@
 
 const delete_project = (pro_id)=>{
   return {
-    type:'DELETE',
+    type:'DELETE_PROJECT',
     id:pro_id
   }
 }

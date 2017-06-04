@@ -19,6 +19,8 @@ const ev = (function(){
     this.run_state= false;
     this.project_id = pro_id;
     this.id = 'ev'+Date.parse(new Date());
+    this.content ="";
+    this.complete = false;
   }
 
   function _caculateTime(ev){
@@ -36,6 +38,7 @@ const ev = (function(){
         time_count[key] = time_count[key]+one[key];
       }
     }
+    checkTime(time_count);
     return time_count;
   }
   function _reduceTime(time1,time2){

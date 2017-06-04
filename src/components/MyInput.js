@@ -12,8 +12,10 @@ class MyInput extends Component{
     this.props.text.call(this,text);
   }
   render(){
+    const { autoFocus=false } =this.props;
     return(
-      <TextInput 
+      <TextInput
+        autoFocus ={autoFocus}
         style={{width: this.props.width?this.props.width:200}}
         onChangeText={this.setText.bind(this)}
         value={this.state.text}

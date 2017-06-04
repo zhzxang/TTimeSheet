@@ -14,6 +14,8 @@ import CreateProject from './pages/CreateProject';
 import NavFrame from './pages/NavFrame';
 import ThemeSetting from './pages/setting/ThemeSetting';
 import About from './pages/setting/About';
+import CompleteEvent from './pages/home/CompleteEvent';
+import Welcome from './pages/home/Welcome';
 
 import config from './config';
 import storage from './services/storage';
@@ -28,7 +30,7 @@ import ev from './services/event';
 
 class App extends Component {
   componentWillMount(){
-    const { projects,events,current_data,dispatch } = this.props;
+    const { projects,events,current_data,dispatch,history } = this.props;
     storage.load({
       key: 'ALLDATA',
       id: 'last'
@@ -56,6 +58,9 @@ class App extends Component {
         else if(current_data.config_theme === 'blue'){
           config.setBlue();
         }
+      }
+      if(!current_data.event_id){
+        dispatch(edit_current_data({new:true}));
       }
     }).catch(err=>{
       console.log(err);
@@ -85,6 +90,8 @@ class App extends Component {
             <Route path="/project_create" component={CreateProject}/>
             <Route path="/themeSetting" component={ThemeSetting}/>
             <Route path="/about" component={About}/>
+            <Route path="/completeEvent" component={CompleteEvent}/>
+            <Route path="/welcome" component={Welcome}/>
             <Route component={NoMatch} />
           </Switch>
         </View>

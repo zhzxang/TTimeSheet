@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { 
+import {
   TouchableOpacity,
   StyleSheet,
   View
@@ -14,7 +14,7 @@ class CreateEvent extends Component{
     ev_name:''
   }
   createEvent(){
-    const { ev_name } =this.state; 
+    const { ev_name } =this.state;
     this.props.createEvent.call(this,ev_name);
   }
   setText(text){
@@ -26,7 +26,7 @@ class CreateEvent extends Component{
   render(){
     return(
       <View style={styles.main}>
-        <MyInput text={this.setText.bind(this)} style={{width:'100%'}} />
+        <MyInput autoFocus={true} text={this.setText.bind(this)} style={{width:'100%'}} />
         <TouchableOpacity onPress={this.cancel.bind(this)} style={{}}>
           <Icon name="times" size={30} color={config.draw[0]}  />
         </TouchableOpacity>

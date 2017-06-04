@@ -8,14 +8,15 @@ class MyDate extends Component{
     super(props);
   }
   render(){
+    const { complete=false } = this.props;
     return (
       <View style={styles.main}>
-        <Text style={styles.text}>{this.props.h}</Text>
-        <Text style={styles.label}>H</Text>
-        <Text style={styles.text}>{this.props.m}</Text>
-        <Text style={styles.label}>M</Text>
-        <Text style={styles.text}>{this.props.s}</Text>
-        <Text style={styles.label}>S</Text>
+        <Text style={[styles.text,complete?{color:'#ccc'}:null]}>{this.props.h}</Text>
+        <Text style={[styles.label,complete?{color:'#ccc'}:null]}>H</Text>
+        <Text style={[styles.text,complete?{color:'#ccc'}:null]}>{this.props.m}</Text>
+        <Text style={[styles.label,complete?{color:'#ccc'}:null]}>M</Text>
+        <Text style={[styles.text,complete?{color:'#ccc'}:null]}>{this.props.s}</Text>
+        <Text style={[styles.label,complete?{color:'#ccc'}:null]}>S</Text>
       </View>
     )
   }
@@ -24,15 +25,14 @@ class MyDate extends Component{
 const styles = StyleSheet.create({
   main:{
     flexDirection: 'row',
-    width: 90,
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    width: 100,
   },
   text:{
-    fontSize: 18,
+    fontSize: 20,
   },
   label:{
     fontSize: 20,
+    marginRight: 3,
     color: config.draw[1]
   }
 })
